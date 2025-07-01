@@ -4,7 +4,7 @@ import { StudentForm } from './student/student-form/student-form';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [StudentForm],
+  imports: [StudentForm,],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })

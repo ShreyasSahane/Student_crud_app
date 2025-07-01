@@ -1,74 +1,130 @@
-<div *ngIf="currentView === 'list'">
-  <button (click)="addNewStudent()">Add Student</button>
-  <table border="1" style="width:100%; margin-top:10px;">
-    <tr>
-      <th>Name</th>
-      <th>City</th>
-      <th>Address</th>
-      <th>Birth Date</th>
-      <th>Active</th>
-      <th>Actions</th>
-    </tr>
-    <tr *ngFor="let s of students">
-      <td>{{s.name}}</td>
-      <td>{{s.city}}</td>
-      <td>{{s.address}}</td>
-      <td>{{s.birth_date}}</td>
-      <td>{{s.is_active ? 'Yes' : 'No'}}</td>
-      <td>
-        <button (click)="edit(s)">Edit</button>
-        <button (click)="delete(s.id!)">Delete</button>
-        <button (click)="view(s)">View</button>
-      </td>
-    </tr>
-  </table>
-</div>
+<div class="student-management">
+  <!-- List View -->
+  <div *ngIf="currentView === 'list'" class="list-view">
+    <button class="add-student-btn" (click)="addNewStudent()">
+      Add Student
+    </button>
+    <table class="student-table">
+      <tr>
+        <th>Name</th>
+        <th>City</th>
+        <th>Address</th>
+        <th>Birth Date</th>
+        <th>Active</th>
+        <th>Actions</th>
+      </tr>
+      <tr *ngFor="let s of students">
+        <td>{{s.name}}</td>
+        <td>{{s.city}}</td>
+        <td>{{s.address}}</td>
+        <td>{{s.birth_date}}</td>
+        <td>
+          <span class="status-badge" [class]="s.is_active ? 'status-active' : 'status-inactive'">
+            {{s.is_active ? 'Active' : 'Inactive'}}
+          </span>
+        </td>
+        <td>
+          <div class="action-buttons">
+            <button class="btn btn-edit" (click)="edit(s)">Edit</button>
+            <button class="btn btn-delete" (click)="delete(s.id!)">Delete</button>
+            <button class="btn btn-view" (click)="view(s)">View</button>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
 
-<div *ngIf="currentView === 'form'">
-  <form [formGroup]="form" (ngSubmit)="submitForm()">
-    <div>
-      <label>Name:</label>
-      <input formControlName="name" />
-      <span *ngIf="isFieldInvalid('name')">Name is required (min 2 chars)</span>
-    </div>
-    <div>
-      <label>City:</label>
-      <select formControlName="city">
-        <option value="">Select</option>
-        <option *ngFor="let c of cities" [value]="c">{{c}}</option>
-      </select>
-      <span *ngIf="isFieldInvalid('city')">City is required</span>
-    </div>
-    <div>
-      <label>Address:</label>
-      <textarea formControlName="address"></textarea>
-      <span *ngIf="isFieldInvalid('address')">Address is required</span>
-    </div>
-    <div>
-      <label>Birth Date:</label>
-      <input type="date" formControlName="birth_date" />
-      <span *ngIf="isFieldInvalid('birth_date')">Birth date is required</span>
-    </div>
-    <div>
-      <label>Active:</label>
-      <input type="checkbox" formControlName="is_active" />
-    </div>
-    <div style="margin-top:10px;">
-      <button type="submit">Submit</button>
-      <button type="button" (click)="resetForm()">Reset</button>
-      <button type="button" (click)="cancelEdit()">Cancel</button>
-    </div>
-  </form>
-</div>
+  <!-- Form View -->
+  <div *ngIf="currentView === 'form'" class="form-view">
+    <h2 style="color: #0d1044; margin-bottom: 1.5rem; font-size: 1.8rem; font-weight: 600;">
+      {{editMode ? 'Edit Student' : 'Add New Student'}}
+    </h2>
+    <form [formGroup]="form" (ngSubmit)="submitForm()">
+      <div class="form-group">
+        <label>Name:</label>
+        <input class="form-control" formControlName="name" placeholder="Enter student name" />
+        <span class="error-message" *ngIf="isFieldInvalid('name')">
+          Name is required (minimum 2 characters)
+        </span>
+      </div>
+      
+      <div class="form-group">
+        <label>City:</label>
+        <select class="form-control" formControlName="city">
+          <option value="">Select a city</option>
+          <option *ngFor="let c of cities" [value]="c">{{c}}</option>
+        </select>
+        <span class="error-message" *ngIf="isFieldInvalid('city')">
+          City is required
+        </span>
+      </div>
+      
+      <div class="form-group">
+        <label>Address:</label>
+        <textarea class="form-control" formControlName="address" placeholder="Enter full address" rows="3"></textarea>
+        <span class="error-message" *ngIf="isFieldInvalid('address')">
+          Address is required
+        </span>
+      </div>
+      
+      <div class="form-group">
+        <label>Birth Date:</label>
+        <input type="date" class="form-control" formControlName="birth_date" />
+        <span class="error-message" *ngIf="isFieldInvalid('birth_date')">
+          Birth date is required
+        </span>
+      </div>
+      
+      <div class="form-group">
+        <div class="checkbox-container">
+          <input type="checkbox" class="checkbox-input" formControlName="is_active" id="activeCheckbox" />
+          <label for="activeCheckbox">Student is currently active</label>
+        </div>
+      </div>
+      
+      <div class="form-buttons">
+        <button type="submit" class="btn-primary" [disabled]="form.invalid">
+          {{editMode ? 'Update Student' : 'Add Student'}}
+        </button>
+        <button type="button" class="btn-secondary" (click)="resetForm()">
+          Reset Form
+        </button>
+        <button type="button" class="btn-outline" (click)="cancelEdit()">
+          Cancel
+        </button>
+      </div>
+    </form>
+  </div>
 
-<div *ngIf="currentView === 'view'">
-  <h2>Student Details</h2>
-  <div *ngIf="selectedStudent">
-    <p><strong>Name:</strong> {{selectedStudent.name}}</p>
-    <p><strong>City:</strong> {{selectedStudent.city}}</p>
-    <p><strong>Address:</strong> {{selectedStudent.address}}</p>
-    <p><strong>Birth Date:</strong> {{selectedStudent.birth_date}}</p>
-    <p><strong>Active:</strong> {{selectedStudent.is_active ? 'Yes' : 'No'}}</p>
-    <button (click)="showStudentList()">Back to List</button>
+  <!-- View Details -->
+  <div *ngIf="currentView === 'view'" class="view-details">
+    <h2>Student Details</h2>
+    <div *ngIf="selectedStudent">
+      <div class="detail-item">
+        <span class="detail-label">Name:</span>
+        <span class="detail-value">{{selectedStudent.name}}</span>
+      </div>
+      <div class="detail-item">
+        <span class="detail-label">City:</span>
+        <span class="detail-value">{{selectedStudent.city}}</span>
+      </div>
+      <div class="detail-item">
+        <span class="detail-label">Address:</span>
+        <span class="detail-value">{{selectedStudent.address}}</span>
+      </div>
+      <div class="detail-item">
+        <span class="detail-label">Birth Date:</span>
+        <span class="detail-value">{{selectedStudent.birth_date}}</span>
+      </div>
+      <div class="detail-item">
+        <span class="detail-label">Status:</span>
+        <span class="status-badge" [class]="selectedStudent.is_active ? 'status-active' : 'status-inactive'">
+          {{selectedStudent.is_active ? 'Active' : 'Inactive'}}
+        </span>
+      </div>
+      <button class="back-btn" (click)="showStudentList()">
+        ← Back to List
+      </button>
+    </div>
   </div>
 </div>
