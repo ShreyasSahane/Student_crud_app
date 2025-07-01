@@ -1,0 +1,61 @@
+<div *ngIf="currentView === 'list'">
+  <button (click)="addNewStudent()">Add Student</button>
+  <table border="1" style="width:100%; margin-top:10px;">
+    <tr>
+      <th>Name</th>
+      <th>City</th>
+      <th>Address</th>
+      <th>Birth Date</th>
+      <th>Active</th>
+      <th>Actions</th>
+    </tr>
+    <tr *ngFor="let s of students">
+      <td>{{s.name}}</td>
+      <td>{{s.city}}</td>
+      <td>{{s.address}}</td>
+      <td>{{s.birth_date}}</td>
+      <td>{{s.is_active ? 'Yes' : 'No'}}</td>
+      <td>
+        <button (click)="edit(s)">Edit</button>
+        <button (click)="delete(s.id!)">Delete</button>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<div *ngIf="currentView === 'form'">
+  <form [formGroup]="form" (ngSubmit)="submitForm()">
+    <div>
+      <label>Name:</label>
+      <input formControlName="name" />
+      <span *ngIf="isFieldInvalid('name')">Name is required (min 2 chars)</span>
+    </div>
+    <div>
+      <label>City:</label>
+      <select formControlName="city">
+        <option value="">Select</option>
+        <option *ngFor="let c of cities" [value]="c">{{c}}</option>
+      </select>
+      <span *ngIf="isFieldInvalid('city')">City is required</span>
+    </div>
+    <div>
+      <label>Address:</label>
+      <textarea formControlName="address"></textarea>
+      <span *ngIf="isFieldInvalid('address')">Address is required</span>
+    </div>
+    <div>
+      <label>Birth Date:</label>
+      <input type="date" formControlName="birth_date" />
+      <span *ngIf="isFieldInvalid('birth_date')">Birth date is required</span>
+    </div>
+    <div>
+      <label>Active:</label>
+      <input type="checkbox" formControlName="is_active" />
+    </div>
+    <div style="margin-top:10px;">
+      <button type="submit">Submit</button>
+      <button type="button" (click)="resetForm()">Reset</button>
+      <button type="button" (click)="cancelEdit()">Cancel</button>
+    </div>
+  </form>
+</div>
