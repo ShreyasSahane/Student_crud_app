@@ -16,8 +16,9 @@ export class StudentForm implements OnInit {
   form: FormGroup;
   editMode = false;
   selectedId: number | null = null;
-  currentView: 'form' | 'list' = 'list';
+  currentView: 'form' | 'list' | 'view' = 'list';
   cities = ['Mumbai', 'Delhi', 'Bangalore', 'Chennai', 'Kolkata'];
+  selectedStudent: Student | null = null;
 
   constructor(private fb: FormBuilder, private service: StudentService) {
     this.form = this.fb.group({
@@ -94,6 +95,7 @@ export class StudentForm implements OnInit {
 
   showStudentList() {
     this.currentView = 'list';
+    this.selectedStudent = null;
   }
 
   addNewStudent() {
@@ -104,5 +106,10 @@ export class StudentForm implements OnInit {
   cancelEdit() {
     this.resetForm();
     this.currentView = 'list';
+  }
+
+  view(student: Student) {
+    this.selectedStudent = student;
+    this.currentView = 'view';
   }
 }

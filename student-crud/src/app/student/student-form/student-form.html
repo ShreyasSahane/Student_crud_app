@@ -18,6 +18,7 @@
       <td>
         <button (click)="edit(s)">Edit</button>
         <button (click)="delete(s.id!)">Delete</button>
+        <button (click)="view(s)">View</button>
       </td>
     </tr>
   </table>
@@ -58,4 +59,16 @@
       <button type="button" (click)="cancelEdit()">Cancel</button>
     </div>
   </form>
+</div>
+
+<div *ngIf="currentView === 'view'">
+  <h2>Student Details</h2>
+  <div *ngIf="selectedStudent">
+    <p><strong>Name:</strong> {{selectedStudent.name}}</p>
+    <p><strong>City:</strong> {{selectedStudent.city}}</p>
+    <p><strong>Address:</strong> {{selectedStudent.address}}</p>
+    <p><strong>Birth Date:</strong> {{selectedStudent.birth_date}}</p>
+    <p><strong>Active:</strong> {{selectedStudent.is_active ? 'Yes' : 'No'}}</p>
+    <button (click)="showStudentList()">Back to List</button>
+  </div>
 </div>
