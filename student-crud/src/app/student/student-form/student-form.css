@@ -14,7 +14,7 @@
 }
 
 .add-student-btn {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: #667eea;
   color: white;
   border: none;
   padding: 14px 28px;
@@ -33,11 +33,13 @@
 }
 
 .add-student-btn:hover {
+  background: #5a67d8;
   transform: translateY(-3px);
   box-shadow: 0 8px 25px rgba(102, 126, 234, 0.5);
 }
 
 .add-student-btn:active {
+  background: #4c51bf;
   transform: translateY(-1px);
 }
 
@@ -54,7 +56,7 @@
 }
 
 .student-table th {
-  background: linear-gradient(135deg, #0d1044 0%, #667eea 100%);
+  background: #0d1044;
   color: white;
   padding: 18px 16px;
   text-align: left;
@@ -104,34 +106,34 @@
 }
 
 .btn-edit {
-  background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+  background: #28a745;
   color: white;
 }
 
 .btn-edit:hover {
-  background: linear-gradient(135deg, #218838 0%, #1ba085 100%);
+  background: #218838;
   transform: translateY(-2px);
   box-shadow: 0 4px 15px rgba(40, 167, 69, 0.4);
 }
 
 .btn-delete {
-  background: linear-gradient(135deg, #dc3545 0%, #e83e8c 100%);
+  background: #dc3545;
   color: white;
 }
 
 .btn-delete:hover {
-  background: linear-gradient(135deg, #c82333 0%, #d91a72 100%);
+  background: #c82333;
   transform: translateY(-2px);
   box-shadow: 0 4px 15px rgba(220, 53, 69, 0.4);
 }
 
 .btn-view {
-  background: linear-gradient(135deg, #17a2b8 0%, #6f42c1 100%);
+  background: #17a2b8;
   color: white;
 }
 
 .btn-view:hover {
-  background: linear-gradient(135deg, #138496 0%, #59359a 100%);
+  background: #138496;
   transform: translateY(-2px);
   box-shadow: 0 4px 15px rgba(23, 162, 184, 0.4);
 }
